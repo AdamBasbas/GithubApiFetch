@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         String date = simpleDateFormat.format(new Date());
 
+        String filter = "created:>"+date+"&sort=stars&order=desc";
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Api.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         Api api = retrofit.create(Api.class);
 
-        Call<List<Repo>> call = api.getRepos(date);
+        Call<List<Repo>> call = api.getRepos(filter);
         call.enqueue(new Callback<List<Repo>>() {
             private Call<List<Repo>> call;
             private Throwable t;
@@ -47,11 +49,15 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<List<Repo>> call, Response<List<Repo>> response) {
-                this.call = call;
-                this.response = response;
+
+                Api api = retrofit.create(Api.class);
+
+                this.call = api.getRepos(filter);
+
+
                 List<Repo> repos = response.body();
 
-                for(Repo r: requireNonNull(repos)) {
+                for(Repo r:(repos)) {
                     for (items i : r.getItems()) {
                         for (owner o : i.getOwner()) {
                             Log.d("name", i.getName());
