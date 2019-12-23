@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -28,9 +29,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         String pattern = "yyyy-MM-dd";
         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-        String date = simpleDateFormat.format(new Date());
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH,-1);
+        String date = simpleDateFormat.format(cal.getTime());
 
         String createdDate = "created:>"+date;
         String stars ="stars";
@@ -51,9 +56,10 @@ public class MainActivity extends AppCompatActivity {
 
                 Repo repos = response.body();
                 ArrayList<items> items = repos.getItems();
-
+                Log.d("wselt","created:>"+date);
 
                     for (items i : items) {
+
 
                             Log.d("name", i.getName());
                             Log.d("description", i.getDescription());
