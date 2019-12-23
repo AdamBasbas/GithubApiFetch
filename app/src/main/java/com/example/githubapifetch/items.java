@@ -6,13 +6,17 @@ public class items {
     private String name;
     private String description;
     private String stargazers_count;
-    private ArrayList<owner> owner;
+    private owner owner;
 
-    public items(String name, String description, String stargazers_count, ArrayList<com.example.githubapifetch.owner> owner) {
+    public items(String name, String description, String stargazers_count, com.example.githubapifetch.owner owner) {
         this.name = name;
         this.description = description;
         this.stargazers_count = stargazers_count;
         this.owner = owner;
+    }
+
+    public com.example.githubapifetch.owner getOwner() {
+        return owner;
     }
 
     String getName() {
@@ -27,8 +31,6 @@ public class items {
         return stargazers_count;
     }
 
-    ArrayList<com.example.githubapifetch.owner> getOwner() {
-        return owner;
-    }
+
 }
 

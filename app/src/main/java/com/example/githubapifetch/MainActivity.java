@@ -54,13 +54,13 @@ public class MainActivity extends AppCompatActivity {
 
 
                     for (items i : items) {
-                        for (owner o : i.getOwner() ) {
+
                             Log.d("name", i.getName());
                             Log.d("description", i.getDescription());
                             Log.d("stargazers_count", i.getStargazers_count());
-                            Log.d("login", o.getLogin());
-                            Log.d("avatar_url", o.getAvatar_url());
-                        }
+                            Log.d("login", i.getOwner().getLogin());
+                            Log.d("avatar_url", i.getOwner().getAvatar_url());
+
                     }
                 }
 
