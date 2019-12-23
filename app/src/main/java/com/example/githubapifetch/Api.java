@@ -15,6 +15,8 @@ public interface Api {
 
     String BASE_URL="https://api.github.com/";
     @GET("search/repositories")
-    Call<List<Repo>> getRepos(@Query("q") String filter);
+    Call<List<Repo>> getRepos(@Query("q") String createdDate,
+                              @Query("sort") String stars,
+                              @Query("order") String desc);
 
 }

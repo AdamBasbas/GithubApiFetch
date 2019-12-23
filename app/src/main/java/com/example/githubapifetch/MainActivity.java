@@ -32,7 +32,10 @@ public class MainActivity extends AppCompatActivity {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         String date = simpleDateFormat.format(new Date());
 
-        String filter = "created:>"+date+"&sort=stars&order=desc";
+        String createdDate = "created:>"+date;
+        String stars ="stars";
+        String desc="desc";
+
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Api.BASE_URL)
@@ -41,19 +44,10 @@ public class MainActivity extends AppCompatActivity {
 
         Api api = retrofit.create(Api.class);
 
-        Call<List<Repo>> call = api.getRepos(filter);
+        Call<List<Repo>> call = api.getRepos(createdDate,stars,desc);
         call.enqueue(new Callback<List<Repo>>() {
-            private Call<List<Repo>> call;
-            private Throwable t;
-            private Response<List<Repo>> response;
-
             @Override
             public void onResponse(Call<List<Repo>> call, Response<List<Repo>> response) {
-
-                Api api = retrofit.create(Api.class);
-
-                this.call = api.getRepos(filter);
-
 
                 List<Repo> repos = response.body();
 
@@ -73,8 +67,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Repo>> call, Throwable t) {
-                this.call = call;
-                this.t = t;
                 Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_SHORT).show();
 
             }
