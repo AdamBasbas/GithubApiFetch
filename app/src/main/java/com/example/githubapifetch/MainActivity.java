@@ -44,16 +44,17 @@ public class MainActivity extends AppCompatActivity {
 
         Api api = retrofit.create(Api.class);
 
-        Call<List<Repo>> call = api.getRepos(createdDate,stars,desc);
-        call.enqueue(new Callback<List<Repo>>() {
+        Call<Repo> call = api.getRepos(createdDate,stars,desc);
+        call.enqueue(new Callback<Repo>() {
             @Override
-            public void onResponse(Call<List<Repo>> call, Response<List<Repo>> response) {
+            public void onResponse(Call<Repo> call, Response<Repo> response) {
 
-                List<Repo> repos = response.body();
+                Repo repos = response.body();
+                ArrayList<items> items = repos.getItems();
 
-                for(Repo r:(repos)) {
-                    for (items i : r.getItems()) {
-                        for (owner o : i.getOwner()) {
+
+                    for (items i : items) {
+                        for (owner o : i.getOwner() ) {
                             Log.d("name", i.getName());
                             Log.d("description", i.getDescription());
                             Log.d("stargazers_count", i.getStargazers_count());
@@ -63,10 +64,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
-            }
+
 
             @Override
-            public void onFailure(Call<List<Repo>> call, Throwable t) {
+            public void onFailure(Call<Repo> call, Throwable t) {
                 //Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_SHORT).show();
                 Log.d("fail", t.getMessage());
             }
