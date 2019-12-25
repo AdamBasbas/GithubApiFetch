@@ -1,10 +1,20 @@
 package com.example.githubapifetch;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -24,6 +34,9 @@ import static java.util.Objects.*;
 
 public class MainActivity extends AppCompatActivity {
 
+    RecyclerView recyclerView;
+    Adapter Adapter;
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,24 +64,21 @@ public class MainActivity extends AppCompatActivity {
 
         Call<Repo> call = api.getRepos(createdDate,stars,desc);
         call.enqueue(new Callback<Repo>() {
+
             @Override
             public void onResponse(Call<Repo> call, Response<Repo> response) {
 
                 Repo repos = response.body();
                 ArrayList<items> items = repos.getItems();
-                Log.d("wselt","created:>"+date);
+                Adapter = new Adapter(items);
 
-                    for (items i : items) {
+                recyclerView = (RecyclerView)findViewById(R.id.TvShows);
+                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                recyclerView.setAdapter(Adapter);
 
+            }
 
-                            Log.d("name", i.getName());
-                            Log.d("description", i.getDescription());
-                            Log.d("stargazers_count", i.getStargazers_count());
-                            Log.d("login", i.getOwner().getLogin());
-                            Log.d("avatar_url", i.getOwner().getAvatar_url());
-
-                    }
-                }
 
 
 
@@ -77,6 +87,13 @@ public class MainActivity extends AppCompatActivity {
                 //Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_SHORT).show();
                 Log.d("fail", t.getMessage());
             }
+
+
+
+
         });
+
+
+
     }
 }
