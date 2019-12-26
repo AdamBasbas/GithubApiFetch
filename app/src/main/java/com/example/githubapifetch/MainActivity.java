@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     Adapter Adapter;
     Context context;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -26,6 +26,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     List<items> Items;
     Context context;
 
+    private String numberCalculation(Long number) {
+        if (number < 1000)
+            return "" + number;
+        int exp = (int) (Math.log(number) / Math.log(1000));
+        return String.format("%.1f %c", number / Math.pow(1000, exp), "kMGTPE".charAt(exp-1));
+    }
+
     public Adapter(List<items> Items)
     {
         this.Items = Items;
@@ -44,7 +51,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         items items = Items.get(position);
         holder.owner.setText(items.getOwner().getLogin());
         holder.textdescription.setText(items.getDescription());
-        holder.stars.setText(items.getStargazers_count());
+        holder.stars.setText(numberCalculation(Long.parseLong(items.getStargazers_count())));
         holder.textTvShow.setText(items.getName());
         Glide.with(context)
                 .asBitmap()

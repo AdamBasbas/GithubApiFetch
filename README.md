@@ -2,7 +2,7 @@
 A small app that will list the most starred Github repos that were created in the last 30 days.
 
 ## Features
-- List the most starred Github repos that were created in the last 30 days.
+- Lists the most starred Github repos that were created in the last 30 days.
 - Shows for each repo the following details:
     - Repository name.
     - Repository description.
